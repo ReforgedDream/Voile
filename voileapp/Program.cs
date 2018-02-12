@@ -6,7 +6,7 @@ namespace voileapp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("HHHHHHHHHHHHHHHELLO WORLD!");
+            Console.WriteLine("hello!");
         }
     }
 }
