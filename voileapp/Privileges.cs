@@ -1,13 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace voileapp
 {
-    sealed class UnmanagedCode
+    /**
+     * IMPORTANT NOTE
+     * Please be awared that I, signed as Reforged Dream, don't own this code.
+     * I just copied it from https://blog.salamandersoft.co.uk/index.php/2009/10/setting-the-owner-of-files-and-directories-in-c/
+     * I can conclude that the author may be RichardWillis.
+     * I hereby thanks the author for the code.
+     **/
+
+    sealed class Privileges
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
