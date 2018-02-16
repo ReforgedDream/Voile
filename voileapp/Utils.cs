@@ -15,7 +15,8 @@ namespace voileapp
          * I just copied it from MSDN
         **/
 
-        // This method accepts two strings the represent two files to // compare. A return value of 0 indicates that the contents of the files
+        // This method accepts two strings the represent two files to 
+        // compare. A return value of 0 indicates that the contents of the files
         // are the same. A return value of any other value indicates that the 
         // files are not the same.
         public static bool FileCompare(string file1, string file2)

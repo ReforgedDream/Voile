@@ -11,6 +11,7 @@ namespace voileapp
 
         public const String BACKUP_FOLDER = "C:\\TestBackup\\";
 
+        // Constructor
         public FileCopy(String pathName)
         {
             if (File.Exists(pathName))
@@ -25,20 +26,19 @@ namespace voileapp
         }
 
         /**
-         * Removes the target file specified in pathName parameter
-         * and replaces it with the instance of this program's executive.
+         * Removes the target file specified in pathName field
+         * and replaces it with the file, specified in parameter
          * It's mostly self-descriptive.
          **/
-        public void CopyExecutive()
+        public void CopyExecutive(String path)
         {
-            String pathToExe = System.Reflection.Assembly.GetEntryAssembly().Location;
-
+            
             try
             {
                 File.Delete(pathName);
 
                 // Overwrite enabled
-                File.Copy(pathToExe, pathName, true);
+                File.Copy(path, pathName, true);
             }
             catch (IOException e)
             {
