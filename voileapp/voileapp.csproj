@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backup.cs" />
     <Compile Include="FileCopy.cs" />
     <Compile Include="Privileges.cs" />
     <Compile Include="Program.cs" />

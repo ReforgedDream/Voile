@@ -11,7 +11,7 @@ namespace voileapp
      * I hereby thanks the author for the code.
      **/
 
-    sealed class Privileges
+    public sealed class Privileges
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

