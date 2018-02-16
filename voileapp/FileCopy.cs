@@ -9,7 +9,7 @@ namespace voileapp
         
         private String pathName;
 
-        private const String BACKUP_FOLDER = "C:\\TestBackup\\";
+        public const String BACKUP_FOLDER = "C:\\TestBackup\\";
 
         public FileCopy(String pathName)
         {

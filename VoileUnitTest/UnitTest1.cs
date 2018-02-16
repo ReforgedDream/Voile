@@ -11,43 +11,63 @@ namespace VoileUnitTest
     public class UnitTest1
     {
 
+        // Path to file used for testing
+        private static String testFileName = "\\testfile.txt";
+        private static String pathToTestFile = Environment.ExpandEnvironmentVariables("%userprofile%") + testFileName;
+        private static String testContent = "The file content is all correct";
+
         [TestMethod]
         public void FileCopy_MakesBackup()
         {
             
-            // Path to file used for testing
-            String pathToTestFile = Environment.ExpandEnvironmentVariables("%userprofile%");
-
-            pathToTestFile = pathToTestFile + "\\testfile.txt";
-
-            String testContent = "The file content is all correct";
-            String actualContent = null;
-
             // Create the test file
-            using (FileStream fs = File.Create(pathToTestFile))
-            {
-                // Add some information to the file
-                Byte[] info = new UTF8Encoding(true).GetBytes(testContent);
-                fs.Write(info, 0, info.Length);
-            }
+            CreateTestFile(pathToTestFile, testContent);
 
             //Create new FileCopy object with the test file's path
             FileCopy fcObj = new FileCopy(pathToTestFile);
             fcObj.MakeBackup();
 
-            // Open the stream and read backed up file
-            using (StreamReader sr = File.OpenText(pathToTestFile))
+            try
             {
-                actualContent = sr.ReadLine();
+                // Compare the content of the file with original test
+                Assert.IsTrue(Utils.FileCompare(pathToTestFile, FileCopy.BACKUP_FOLDER + testFileName), "Backup invalid");
             }
-
-            // Compare the content of the file with original test
-            Assert.AreEqual(actualContent, testContent, "Backup invalid");
-
-            // Delete test file
-            if (File.Exists(pathToTestFile))
+            finally
             {
-                File.Delete(pathToTestFile);
+                // Delete test file
+                if (File.Exists(pathToTestFile))
+                {
+                    File.Delete(pathToTestFile);
+                }
+            }
+            
+        }
+
+        /**
+         * WORK IN PROGRESS 
+         **/
+        /*
+        [TestMethod]
+        public void FileCopy_CopyExecutive()
+        {
+            // Create the test file
+            CreateTestFile(pathToTestFile, testContent);
+
+            //Create new FileCopy object with the test file's path
+            FileCopy fcObj = new FileCopy(pathToTestFile);
+            fcObj.CopyExecutive();
+            
+        }
+        */
+
+        private void CreateTestFile(String path, String content)
+        {
+            // Create the test file
+            using (FileStream fs = File.Create(path))
+            {
+                // Add some information to the file
+                Byte[] info = new UTF8Encoding(true).GetBytes(content);
+                fs.Write(info, 0, info.Length);
             }
         }
     }
